@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>中医内科学读书笔记</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap">
+<style>
+:root{
+  --bg:#E6F1FC; --panel:#F5FAFF; --card:#FFFFFF; --line:#C5DDF3;
+  --accent:#7FB4EA; --accent-soft:#D3E7F9; --ink:#24405C; --muted:#5C7894; --focus:#3F7FBF; --danger:#B4455A;
+  --t1:#CFE6FA; --t2:#DCE1FB; --t3:#CFEFE8; --t4:#FBE0EA; --t5:#FFF0C4;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#15212E; --panel:#1B2939; --card:#223346; --line:#32475E;
+    --accent:#6FA3D6; --accent-soft:#2A4460; --ink:#E3EEF9; --muted:#9DB5CC; --focus:#8DBBE8; --danger:#E58A9B;
+    --t1:#27465F; --t2:#32375F; --t3:#24514D; --t4:#5A3445; --t5:#5A4E26;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15212E; --panel:#1B2939; --card:#223346; --line:#32475E;
+  --accent:#6FA3D6; --accent-soft:#2A4460; --ink:#E3EEF9; --muted:#9DB5CC; --focus:#8DBBE8; --danger:#E58A9B;
+  --t1:#27465F; --t2:#32375F; --t3:#24514D; --t4:#5A3445; --t5:#5A4E26;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 "Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif}
+.wrap{max-width:1040px;margin:0 auto;padding:26px 18px 56px}
+h1,h2{font-weight:700}
+h1{margin:0;font-size:2.2rem;letter-spacing:.05em}
+h2{margin:0;font-size:1.6rem}
+header{padding:4px 0 18px}
+header p{margin:4px 0 0;color:var(--muted)}
+.bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+input,textarea{font:inherit;color:var(--ink);background:var(--card);border:2px solid var(--line);border-radius:16px;padding:9px 14px;width:100%}
+textarea{resize:vertical;line-height:1.7}
+.bar input{flex:1;min-width:200px;border-radius:999px;padding:10px 18px;width:auto}
+button{font:inherit;color:var(--ink);background:var(--card);border:2px solid var(--line);border-radius:999px;padding:8px 16px;cursor:pointer;transition:transform .15s}
+button:hover{background:var(--accent-soft);transform:translateY(-2px)}
+button.primary{background:var(--accent);color:#0F2840;border-color:var(--accent);font-weight:700}
+button.danger{color:var(--danger)}
+:is(input,textarea,button):focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.layout{display:grid;grid-template-columns:210px 1fr;gap:20px;align-items:start}
+nav{background:var(--panel);border:2px solid var(--line);border-radius:26px;padding:10px;position:sticky;top:12px}
+nav button{display:block;width:100%;text-align:left;border:0;border-radius:16px;background:transparent;margin:3px 0;padding:10px 14px}
+nav button:hover{background:var(--accent-soft)}
+nav button[aria-current="true"]{background:var(--accent);color:#0F2840;font-weight:700}
+.head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}
+.adder{display:flex;gap:10px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+.chip{text-align:left;border-radius:22px;border:0;padding:14px 16px;min-height:84px;display:flex;flex-direction:column;justify-content:space-between;background:var(--t1)}
+.chip:nth-child(5n+2){background:var(--t2)}.chip:nth-child(5n+3){background:var(--t3)}
+.chip:nth-child(5n+4){background:var(--t4)}.chip:nth-child(5n+5){background:var(--t5)}
+.chip:hover{transform:translateY(-3px) rotate(-1deg);filter:brightness(.98)}
+.chip b{font-size:1.1rem}
+.chip small{color:var(--muted)}
+.empty{padding:30px;text-align:center;color:var(--muted);background:var(--panel);border:2px dashed var(--line);border-radius:24px}
+.back{margin-bottom:12px}
+.thead{display:flex;gap:10px;align-items:center;margin-bottom:14px}
+.thead input{font-weight:700;font-size:1.3rem;border-radius:18px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.tabs button{border:2px solid transparent;border-radius:999px}
+.tabs button:nth-child(1){background:var(--t1)}.tabs button:nth-child(2){background:var(--t2)}
+.tabs button:nth-child(3){background:var(--t3)}.tabs button:nth-child(4){background:var(--t4)}
+.tabs button:nth-child(5){background:var(--t5)}
+.tabs button[aria-selected="true"]{border-color:var(--ink);font-weight:700}
+.tabs i{font-style:normal;font-size:.8rem;margin-left:4px;color:var(--muted)}
+.panel{background:var(--panel);border:2px solid var(--line);border-radius:26px;padding:18px}
+.panel textarea{min-height:240px}
+.zx{background:var(--card);border:2px solid var(--line);border-left:8px solid var(--accent);border-radius:20px;padding:12px;margin-bottom:12px}
+.zxhead input{font-weight:700;font-size:1.1rem}
+.zxhead{display:flex;gap:8px;margin-bottom:8px}
+.zgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.zgrid label{color:var(--muted);font-size:.9rem}
+.zgrid textarea{min-height:96px;color:var(--ink);font-size:1.05rem;line-height:1.9;border-color:transparent}
+.tag{display:inline-block;margin:0 0 4px 4px;padding:1px 12px;border-radius:999px;font-weight:700;font-size:.9rem;color:var(--ink)}
+.l-sym .tag,.l-sym textarea{background:var(--t4)}
+.l-tx .tag,.l-tx textarea{background:var(--t3)}
+.l-fm .tag,.l-fm textarea{background:var(--t5)}
+.l-comp .tag,.l-comp textarea{background:var(--t2)}
+.f-etio textarea{background:var(--t1)}.f-diag textarea{background:var(--t2)}.f-diff textarea{background:var(--t3)}.f-pri textarea{background:var(--t4)}
+.panel>.fld textarea{font-size:1.1rem;line-height:1.95;border-color:transparent}
+.fld{position:relative}
+.rbtn{margin-left:auto}
+.tabs button.tb-etio{background:var(--t1)}.tabs button.tb-diag{background:var(--t2)}.tabs button.tb-diff{background:var(--t3)}
+.tabs button.tb-bzyd{background:var(--t6)}.tabs button.tb-pri{background:var(--t4)}.tabs button.tb-zx{background:var(--t5)}.tabs button.tb-map{background:var(--accent)}
+:root{--t6:#FFE3CF}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--t6:#5A3E2A}}
+:root[data-theme="dark"]{--t6:#5A3E2A}
+.f-bzyd textarea{background:var(--t6)}
+.f-zxn textarea{background:var(--t5)}
+select{font:inherit;color:var(--ink);background:var(--card);border:2px solid var(--line);border-radius:999px;padding:8px 14px}
+nav .wbtn{margin-top:8px;border:2px dashed var(--line);border-radius:16px}
+.zhrow{display:grid;grid-template-columns:minmax(90px,.35fr) 1fr auto;gap:8px;align-items:start;margin-bottom:8px}
+.zhrow input{background:var(--t6);border-color:transparent}
+.zhrow textarea{min-height:60px}
+.zhrow button{padding:6px 12px}
+@media (max-width:720px){.zhrow{grid-template-columns:1fr auto}.zhrow input{grid-column:1;grid-row:1}.zhrow button{grid-column:2;grid-row:1}.zhrow textarea{grid-column:1/3;grid-row:2}}
+.wheelbox{position:relative;width:min(340px,86vw);margin:12px auto 0}
+.ptr{position:absolute;left:50%;top:-14px;transform:translateX(-50%);font-size:2rem;line-height:1;z-index:2;color:var(--danger)}
+.wheel{width:100%;height:auto;display:block;border-radius:50%;filter:drop-shadow(0 6px 14px rgba(40,80,120,.25))}
+.wctl{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:16px 0}
+.qs{margin-bottom:14px}
+.qs .tag{display:inline-block;margin:0 0 4px 4px;padding:1px 12px;border-radius:999px;font-weight:700;font-size:.9rem;background:var(--accent-soft)}
+.qs textarea{min-height:110px;font-size:1.05rem;line-height:1.9;border-color:transparent}
+.score{font-size:3rem;font-weight:700;text-align:center;margin:6px 0}
+.rsec{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:12px 16px;margin-bottom:10px}
+.rsec h3{margin:0 0 6px;display:flex;justify-content:space-between;font-size:1.05rem}
+.pt{padding:2px 0}
+textarea{resize:none;overflow:hidden}
+.tabs button.tb-zxt{background:var(--t3)}
+.cmpbar{display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap;margin-bottom:12px}
+.cmpbar>b{padding-top:6px;min-width:5em}
+.pills{display:flex;gap:8px;flex-wrap:wrap;flex:1}
+.pill[aria-pressed="true"]{background:var(--accent);color:#0F2840;border-color:var(--accent);font-weight:700}
+.ct{margin:18px 0 4px;font-size:1.05rem}
+.tblwrap{overflow-x:auto;margin:10px 0 18px;border:2px solid var(--line);border-radius:18px;background:var(--card)}
+table.cmp{border-collapse:separate;border-spacing:0;min-width:100%;font-size:.95rem}
+.cmp th,.cmp td{padding:10px 12px;vertical-align:top;text-align:left;border-bottom:1px solid var(--line);border-right:1px solid var(--line);min-width:150px}
+.cmp thead th{background:var(--accent-soft)}
+.cmp tbody th{background:var(--panel);position:sticky;left:0;min-width:96px}
+.cmp ul{margin:0;padding-left:1.1em}
+.cmp .nil{color:var(--muted)}
+.cmp tr:last-child th,.cmp tr:last-child td{border-bottom:0}
+.cmp th:last-child,.cmp td:last-child{border-right:0}
+.rt{min-height:90px;padding:9px 14px;border:2px solid transparent;border-radius:16px;background:var(--card);color:var(--ink);font-size:1.05rem;line-height:1.9;overflow-wrap:anywhere;outline:0}
+.rt:focus{border-color:var(--focus)}
+.rt ul,.rt ol{margin:0;padding-left:1.4em}
+.rt p,.rt div{margin:0}
+.panel>.fld .rt{font-size:1.1rem;line-height:1.95;min-height:240px}
+.f-etio .rt{background:var(--t1)}.f-diag .rt{background:var(--t2)}.f-diff .rt{background:var(--t3)}.f-bzyd .rt{background:var(--t6)}.f-pri .rt{background:var(--t4)}
+.l-sym .rt{background:var(--t4)}.l-tx .rt{background:var(--t3)}.l-fm .rt{background:var(--t5)}.l-zh .rt{background:var(--t6)}
+.zhrow .rt{min-height:60px}
+[style*="background-color"]{color:#27425E}
+.fmtbar{display:flex;gap:6px;flex-wrap:wrap;align-items:center;position:sticky;top:8px;z-index:3;background:var(--panel);border:2px solid var(--line);border-radius:18px;padding:6px 10px;margin-bottom:10px}
+.fmtbar button{padding:4px 12px}
+.fmthint{color:var(--muted);font-size:.85rem;margin-left:auto}
+@media (max-width:720px){.zhrow .rt{grid-column:1/3;grid-row:2}}
+.tc0{--bc:var(--t1)}.tc1{--bc:var(--t2)}.tc2{--bc:var(--t3)}.tc3{--bc:var(--t4)}.tc4{--bc:var(--t5)}.tc5{--bc:var(--t6)}
+.pt.ok::before{content:"✅ "}.pt.part::before{content:"🟡 "}.pt.no::before{content:"❌ "}
+.zx{padding:10px 12px}
+.zx:not(.open) .zxhead{margin-bottom:0}
+.tog{padding:4px 12px;flex:none}
+.tog::before{content:"▸"}.zx.open .tog::before{content:"▾"}
+.zbody{display:none;margin-top:4px}.zx.open .zbody{display:block}
+.sub{margin-bottom:8px}
+.subh{border:0;background:transparent;padding:2px 0;border-radius:999px}
+.subh:hover{background:transparent;transform:none}
+.sub .tag{margin:0;cursor:pointer}
+.sub .tag::before{content:"▸ "}.sub.open .tag::before{content:"▾ "}
+.sub.has .tag::after{content:" ✓"}
+.subbody{display:none;margin:6px 0 4px}.sub.open .subbody{display:block}
+.sub textarea{min-height:90px;color:var(--ink);font-size:1.05rem;line-height:1.9;border-color:transparent}
+.mini{display:block;margin:8px 0 3px 4px;color:var(--muted);font-size:.85rem}
+.subbody .mini:first-child{margin-top:0}
+.sub textarea+.mini{margin-top:16px}
+.l-zh .tag,.l-zh textarea{background:var(--t6)}
+.mmwrap{overflow-x:auto;padding:8px 4px 12px}
+.mm ul{list-style:none;margin:0;padding:0}
+.mm li{display:flex;align-items:center;position:relative;padding:4px 0 4px 26px}
+.mm li::before{content:"";position:absolute;left:0;top:50%;width:26px;border-top:2px solid var(--line)}
+.mm li::after{content:"";position:absolute;left:0;top:0;bottom:0;border-left:2px solid var(--line)}
+.mm li:first-child::after{top:50%}.mm li:last-child::after{bottom:50%}.mm li:only-child::after{display:none}
+.mm li>ul{position:relative;margin-left:26px;display:flex;flex-direction:column;justify-content:center}
+.mm li>ul::before{content:"";position:absolute;left:-26px;top:50%;width:26px;border-top:2px solid var(--line)}
+.mm>ul>li{padding-left:0}
+.mm>ul>li::before,.mm>ul>li::after{display:none}
+.mm .node{display:block;max-width:230px;padding:6px 12px;border-radius:14px;background:var(--card);border:2px solid var(--bc,var(--line));line-height:1.5;word-break:break-word;font-size:.95rem}
+.mm li.root>.node{background:var(--accent);color:#0F2840;font-weight:700;font-size:1.1rem;border-color:var(--accent)}
+.mm li.l1>.node{background:var(--bc);font-weight:700}
+.b-etio{--bc:var(--t1)}.b-diag{--bc:var(--t2)}.b-diff{--bc:var(--t3)}.b-bzyd{--bc:var(--t6)}.b-pri{--bc:var(--t4)}.b-zx{--bc:var(--t5)}
+.recite>.fld:not(.shown) textarea,.recite>.fld:not(.shown) .rt{filter:blur(8px);pointer-events:none}
+.recite>.fld:not(.shown){cursor:pointer}
+.recite>.fld:not(.shown)::after{content:"👆 点一下看答案";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--ink)}
+.saved{color:var(--muted);font-size:.85rem;margin-top:8px;min-height:1.4em}
+dialog{width:min(620px,94vw);border:2px solid var(--line);border-radius:24px;background:var(--card);color:var(--ink);padding:20px}
+dialog::backdrop{background:rgba(20,40,60,.45)}
+.dlgacts{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
+.hint{color:var(--muted)}
+footer{margin-top:28px;color:var(--muted);font-size:.85rem}
+body.viewer #main .adder,body.viewer #main .fmtbar,body.viewer #main button.danger,body.viewer #main [data-act="add"],body.viewer #main [data-act="addz"],body.viewer #main [data-act="addzh"],body.viewer #main [data-act="delzh"],body.viewer #main [data-act="delz"],body.viewer #main [data-act="deltopic"]{display:none!important}
+body.viewer #main input:not([type="search"]),body.viewer #main textarea,body.viewer #main .rt{pointer-events:none;opacity:.88}
+body.viewer #bkImport{display:none!important}
+@media (max-width:720px){
+  .layout{grid-template-columns:1fr}
+  nav{position:static;display:flex;overflow-x:auto;gap:4px}
+  nav button{width:auto;white-space:nowrap}
+  .zgrid{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){button{transition:none}button:hover,.chip:hover{transform:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>🩺 中医内科学笔记</h1>
+    <p>选分类，添加病证，点进去按病因病机、诊断等分栏填写。写的内容自动保存。</p>
+  </header>
+  <div class="bar">
+    <input id="q" type="search" placeholder="搜索病证或笔记内容" aria-label="搜索笔记">
+    <button id="backup">备份与导入</button>
+    <button id="adminLogin">管理员登录</button>
+    <button id="theme">深浅色</button>
+  </div>
+  <div class="layout">
+    <nav id="nav" aria-label="病证分类"></nav>
+    <main id="main"></main>
+  </div>
+  <footer><span id="cloudStatus">正在连接云端……</span> · 建议定期用“备份与导入”保存备份。</footer>
+</div>
+
+<dialog id="bk">
+  <h2>备份与导入</h2>
+  <p class="hint">复制下面的文字存到备忘录就是备份。换设备时粘贴回来点“导入”，会覆盖当前笔记。</p>
+  <textarea id="bkText" rows="9"></textarea>
+  <div class="dlgacts"><button type="button" id="bkClose">关闭</button><button type="button" class="primary" id="bkImport">导入</button></div>
+  <p class="hint" id="bkMsg"></p>
+</dialog>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBV6V_AHeDFccYaPMBgYHNbIRW485DAXE4",
+  authDomain: "tcm-notes.firebaseapp.com",
+  projectId: "tcm-notes",
+  storageBucket: "tcm-notes.firebasestorage.app",
+  messagingSenderId: "291947727241",
+  appId: "1:291947727241:web:c7cc0fd4b462b1213cf958",
+  measurementId: "G-KTEGEWZD2M"
+};
+const firebaseApp = initializeApp(firebaseConfig);
+const auth = getAuth(firebaseApp);
+const db = getFirestore(firebaseApp);
+const noteRef = doc(db, "notes", "main");
+let cloudReady=false, cloudOwner=false, cloudUnsubscribe=null, currentUser=null, cloudWriteChain=Promise.resolve();
+
+const KEY='neike-notes-v3';
+const $=id=>document.getElementById(id);
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const TABS=[['etio','病因病机','🌱'],['diag','诊断','🔍'],['diff','鉴别诊断','⚖️'],['pri','治则治法','🧭'],['zx','常见证型','📋']];
+const PH={etio:'• 每行写一个要点，按回车自动变成下一个小圆点',diag:'• 每行一个诊断要点',diff:'• 和哪个病证鉴别，区别在哪',pri:'• 治则\n• 治法'};
+const seed=()=>[["肺系病证","🫁"],["心系病证","💗"],["脑系病证","🧠"],["脾胃系病证","🍚"],["肝系病证","🌿"],["肾系病证","💧"],["气血津液病证","🩸"],["经络肢体病证","🦴"]].map(([sys,em])=>({sys,em,items:[]}));
+TABS.splice(3,0,['bzyd','辨证要点','🎯']);TABS.push(['map','思维导图','🗺️']);PH.bzyd='• 每行一个辨证要点';TABS.splice(6,0,['zxt','证型对比表','📊']);
+const zopen=new Set(),zsub=new Set();
+let mode=null;
+const W={stage:'wheel',rot:0,cat:'all',seg:null,segCat:null,pick:null,ans:{},res:null,spinning:false};
+let DATA,cur=0,open=null,delArm=false,memOnly=false,timer=null,recite=false;
+try{const s=localStorage.getItem(KEY);if(s){const d=JSON.parse(s);if(Array.isArray(d)&&d.length)DATA=d;}}catch(e){memOnly=true;}
+if(!DATA)DATA=seed();
+function persist(){
+  try{localStorage.setItem(KEY,JSON.stringify(DATA));setSaved('已在本机保存');}
+  catch(e){memOnly=true;setSaved('本机保存失败，请用备份');}
+  if(cloudReady && cloudOwner && currentUser){
+    const payload=JSON.parse(JSON.stringify(DATA));
+    cloudWriteChain=cloudWriteChain.then(()=>setDoc(noteRef,{data:payload,updatedAt:serverTimestamp()}))
+      .then(()=>setCloudStatus('☁️ 已同步到云端'))
+      .catch(e=>{console.error(e);setCloudStatus('云端保存失败：请检查 Firestore Rules');setSaved('云端保存失败，请勿关闭页面并检查网络');});
+  }
+}
+function setSaved(t){const el=document.getElementById('saved');if(el)el.textContent=t;}
+function scheduleSave(){setSaved('保存中……');clearTimeout(timer);timer=setTimeout(persist,400);}
+const filled=t=>[t.etio,t.diag,t.diff,t.bzyd,t.pri].filter(x=>hv(x)).length+(t.zx.length?1:0);
+const nav=$('nav'),main=$('main'),q=$('q');
+
+function renderNav(){
+  nav.innerHTML='';
+  DATA.forEach((s,i)=>{
+    const b=document.createElement('button');
+    b.textContent=(s.em||'📘')+' '+s.sys;
+    if((!mode||mode==='cmp')&&(!q.value&&!open&&i===cur||!q.value&&open&&i===open.ci))b.setAttribute('aria-current','true');
+    b.onclick=()=>{cur=i;open=null;mode=null;q.value='';render();};
+    nav.appendChild(b);
+  });
+}
+function zhGet(z){if(!Array.isArray(z.zha))z.zha=hv(z.zh)?[{s:'',a:String(z.zh)}]:[];return z.zha;}
+function zhHas(z){return zhGet(z).some(r=>hv(r.s)||hv(r.a));}
+function zhBody(z){
+  const rows=zhGet(z).map((r,j)=>'<div class="zhrow" data-zi="'+j+'"><input data-zk="s" placeholder="症状，例如：恶寒重" value="'+esc(r.s)+'" aria-label="症状">'+rtDiv('data-zk="a"','原因分析',r.a)+'<button class="danger" data-act="delzh" aria-label="删除这一格">✕</button></div>').join('');
+  return rows+'<button data-act="addzh">＋ 添加一格</button>';
+}
+function addWheelBtn(){
+  const b=document.createElement('button');b.className='wbtn';b.textContent='🎡 自测轮盘';
+  if(mode==='wheel'&&!q.value)b.setAttribute('aria-current','true');
+  b.onclick=()=>{mode='wheel';open=null;q.value='';W.stage='wheel';W.seg=null;render();};
+  nav.appendChild(b);
+}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));const x=a[i];a[i]=a[j];a[j]=x;}return a;}
+function qSecs(t){
+  const s=[];
+  [['etio','病因病机'],['diag','诊断'],['diff','鉴别诊断'],['bzyd','辨证要点'],['pri','治则治法']].forEach(p=>{const L=lines(t[p[0]]);if(L.length)s.push({k:p[0],l:p[1],pts:L});});
+  const zn=t.zx.map(z=>(z.n||'').trim()).filter(Boolean);
+  if(zn.length)s.push({k:'zxn',l:'常见证型（每行写一个证型名称）',pts:zn});
+  return s;
+}
+function poolList(){
+  const pool=[];
+  DATA.forEach((s,ci)=>s.items.forEach((t,ti)=>{if(W.cat!=='all'&&ci!==+W.cat)return;if(qSecs(t).length)pool.push({ci:ci,ti:ti});}));
+  return pool;
+}
+function viewWheel(){
+  if(W.stage==='quiz')return viewQuiz();
+  if(W.stage==='result')return viewResult();
+  const pool=poolList();
+  const head='<div class="head"><h2>🎡 自测轮盘</h2></div>';
+  const opts='<option value="all">全部分类</option>'+DATA.map((s,i)=>'<option value="'+i+'"'+(String(W.cat)===String(i)?' selected':'')+'>'+esc(s.sys)+'</option>').join('');
+  const sel='<div class="wctl"><select id="wcat" aria-label="选择分类">'+opts+'</select><button data-act="reshuffle">换一批病证</button></div>';
+  if(!pool.length)return head+sel+'<div class="empty">轮盘需要有内容的病证。先去病证里填一些笔记，再回来转。</div>';
+  if(!W.seg||W.segCat!==W.cat){W.seg=shuffle(pool).slice(0,12);W.segCat=W.cat;}
+  const seg=W.seg.length===1?[W.seg[0],W.seg[0]]:W.seg;
+  const n=seg.length,a=360/n,R=150,fs=n<=8?15:n<=10?13:11;
+  const P=d=>{const r=d*Math.PI/180;return [R*Math.sin(r),-R*Math.cos(r)];};
+  const wedges=seg.map((p,i)=>{
+    const A=P(i*a),B=P((i+1)*a),c=(i+.5)*a;
+    const nm=DATA[p.ci].items[p.ti].n||'未命名',lb=nm.length>5?nm.slice(0,5)+'…':nm;
+    return '<path d="M0,0 L'+A[0].toFixed(1)+','+A[1].toFixed(1)+' A'+R+','+R+' 0 0 1 '+B[0].toFixed(1)+','+B[1].toFixed(1)+' Z" style="fill:var(--t'+(i%6+1)+')" stroke="var(--card)" stroke-width="2"/><text transform="rotate('+c+')" y="-'+(R*.62).toFixed(0)+'" text-anchor="middle" dominant-baseline="middle" font-size="'+fs+'" font-weight="700" style="fill:var(--ink)">'+esc(lb)+'</text>';
+  }).join('');
+  return head+sel+'<div class="wheelbox"><div class="ptr">▼</div><svg id="wheel" class="wheel" viewBox="-155 -155 310 310" style="transform:rotate('+W.rot+'deg)"><circle r="152" style="fill:var(--card)"/>'+wedges+'<circle r="14" style="fill:var(--card)" stroke="var(--line)" stroke-width="2"/></svg></div>'+
+    '<div class="wctl"><button class="primary" data-act="spin" id="spinBtn">🎯 开始转！</button></div>'+
+    '<p class="hint" style="text-align:center">转到哪个病证，就要自己默写它的病因病机、诊断等。现在有 '+pool.length+' 个可考的病证'+(pool.length>12?'，这次抽了 12 个上轮盘':'')+'。</p>';
+}
+function viewQuiz(){
+  const t=DATA[W.pick.ci].items[W.pick.ti],secs=qSecs(t);
+  if(!secs.length){W.stage='wheel';return viewWheel();}
+  return '<button class="back" data-act="qwheel">← 回到轮盘</button><div class="head"><h2>🎯 抽到了：'+esc(t.n)+'</h2></div><p class="hint">不要看笔记，把记得的写下来。每行一个要点，按回车自动换成下一个小圆点。</p>'+
+    secs.map(s=>'<div class="qs f-'+s.k+'"><span class="tag">'+esc(s.l)+'</span><textarea data-q="'+s.k+'" aria-label="'+esc(s.l)+'">'+esc(W.ans[s.k]||'')+'</textarea></div>').join('')+
+    '<button class="primary" data-act="grade">✅ 交卷评分</button>';
+}
+function bg(s){const c=String(s).replace(/[\s•，。、；：,.;:（）()\-—]/g,'');const r=new Set();for(let i=0;i<c.length-1;i++)r.add(c.slice(i,i+2));if(c.length===1)r.add(c);return r;}
+function ptScore(p,ans){const b=bg(p);if(!b.size)return 0;let h=0;b.forEach(x=>{if(ans.has(x))h++;});return Math.max(0,Math.min(1,(h/b.size-.2)/.5));}
+function gradeNow(){
+  const t=DATA[W.pick.ci].items[W.pick.ti],secs=qSecs(t);
+  const res=secs.map(s=>{const ans=bg(W.ans[s.k]||'');const pts=s.pts.map(p=>({p:p,s:ptScore(p,ans)}));return {l:s.l,sc:pts.reduce((a,x)=>a+x.s,0)/pts.length,pts:pts};});
+  W.res={total:Math.round(res.reduce((a,x)=>a+x.sc,0)/res.length*100),res:res,name:t.n};
+  W.stage='result';
+}
+function viewResult(){
+  const r=W.res,msg=r.total>=90?'🎉 太棒了！':r.total>=70?'👍 不错哦':r.total>=50?'💪 再加把劲':'📖 多复习一下';
+  return '<div class="head"><h2>📝 '+esc(r.name)+' 的成绩</h2></div><div class="score">'+r.total+' 分</div><p style="text-align:center">'+msg+'</p>'+
+    r.res.map(x=>'<div class="rsec"><h3><span>'+esc(x.l)+'</span><span>'+Math.round(x.sc*100)+'%</span></h3>'+x.pts.map(q=>'<div class="pt '+(q.s>=.9?'ok':q.s>=.4?'part':'no')+'">'+esc(q.p)+'</div>').join('')+'</div>').join('')+
+    '<p class="hint">评分是按关键字匹配的，换一种说法可能会被扣分，只供参考。✅ 写到了　🟡 写到一部分　❌ 漏掉了</p>'+
+    '<div class="wctl"><button class="primary" data-act="again">🎡 再转一次</button><button data-act="retry">🔁 再考这个</button><button data-act="opennote">📖 去看这个病证的笔记</button></div>';
+}
+function autoSize(el){if(!el.getClientRects().length)return;el.style.height='auto';el.style.height=(el.scrollHeight+4)+'px';}
+function fitAll(){main.querySelectorAll('textarea').forEach(autoSize);}
+const C={ci:null,view:'table',sel:new Set(),fields:new Set(['etio']),deep:false};
+const CF=[['etio','病因病机'],['diag','诊断'],['diff','鉴别诊断'],['bzyd','辨证要点'],['pri','治则治法'],['zx','常见证型']];
+function ulHtml(a){return a.length?'<ul>'+a.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>':'<span class="nil">—</span>';}
+function herbList(s){return plainText(s).split(/[、，,；;\n•]+/).map(x=>x.trim()).filter(Boolean);}
+function zxTable(t){
+  if(!t.zx.length)return '<div class="empty">这个病证还没有证型。先在“常见证型”里添加。</div>';
+  const rows=t.zx.map(z=>{
+    const zh=zhGet(z).filter(r=>hv(r.s)||hv(r.a)).map(r=>(r.s&&r.s.trim()?r.s.trim()+'：':'')+lines(r.a).join('；'));
+    const hb=herbList(z.comp).join('、');
+    return '<tr><th>'+esc(z.n||'未命名')+'</th><td>'+ulHtml(lines(z.sym))+'</td><td>'+ulHtml(zh)+'</td><td>'+ulHtml(lines(z.tx))+'</td><td>'+ulHtml(lines(z.fm))+'</td><td>'+(hb?esc(hb):'<span class="nil">—</span>')+'</td></tr>';
+  }).join('');
+  return '<div class="tblwrap"><table class="cmp"><thead><tr><th>证型</th><th>症状</th><th>证候分析</th><th>治法</th><th>方药</th><th>组成</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+}
+function mmZx(z){
+  const L=a=>lines(a).map(x=>mmNode(x)),parts=[];
+  const sy=L(z.sym);if(sy.length)parts.push(mmNode('症状',sy));
+  const zk=zhGet(z).filter(r=>hv(r.s)||hv(r.a)).map(r=>mmNode(r.s&&r.s.trim()?r.s.trim():'（症状）',L(r.a)));
+  if(zk.length)parts.push(mmNode('证候分析',zk));
+  const tx=L(z.tx);if(tx.length)parts.push(mmNode('治法',tx));
+  const herbs=herbList(z.comp).map(x=>mmNode(x)),fm=lines(z.fm).join('、');
+  if(fm||herbs.length)parts.push(mmNode(fm?'方药：'+fm:'方药',herbs));
+  return mmNode(z.n&&z.n.trim()?z.n:'未命名证型',parts);
+}
+function mmTopic(t,cls){
+  const br=[];
+  CF.forEach(f=>{
+    if(!C.fields.has(f[0])||f[0]==='zx')return;
+    const k=lines(t[f[0]]).map(x=>mmNode(x));
+    if(k.length)br.push(mmNode(f[1],k,'l1 b-'+f[0]));
+  });
+  if(C.fields.has('zx')){
+    const zs=t.zx.map(z=>C.deep?mmZx(z):mmNode(z.n&&z.n.trim()?z.n:'未命名证型'));
+    if(zs.length)br.push(mmNode('常见证型',zs,'l1 b-zx'));
+  }
+  return mmNode(t.n||'未命名',br,cls);
+}
+function mmCmp(idx){
+  const s=DATA[C.ci];
+  const kids=idx.map((i,n)=>mmTopic(s.items[i],'l1 tc'+(n%6)));
+  return '<div class="mmwrap"><div class="mm"><ul>'+mmNode(s.sys,kids,'root')+'</ul></div></div>';
+}
+function tblCmp(idx){
+  const s=DATA[C.ci],ts=idx.map(i=>s.items[i]);
+  const flds=CF.filter(f=>f[0]!=='zx'&&C.fields.has(f[0]));
+  let h='';
+  if(flds.length){
+    h+='<div class="tblwrap"><table class="cmp"><thead><tr><th></th>'+ts.map(t=>'<th>'+esc(t.n||'未命名')+'</th>').join('')+'</tr></thead><tbody>'+
+      flds.map(f=>'<tr><th>'+f[1]+'</th>'+ts.map(t=>'<td>'+ulHtml(lines(t[f[0]]))+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>';
+  }
+  if(C.fields.has('zx'))h+=ts.map(t=>'<h3 class="ct">'+esc(t.n||'未命名')+' 的证型对比</h3>'+zxTable(t)).join('');
+  return h||'<div class="empty">在“显示内容”里选想对比的项目。</div>';
+}
+function openCmp(v){
+  if(!(mode==='cmp'&&C.ci===cur)){C.ci=cur;C.sel=v==='map'?new Set(DATA[cur].items.map((_,i)=>i)):new Set();C.fields=new Set(v==='map'?['zx']:['etio']);C.deep=false;}
+  C.view=v;mode='cmp';open=null;q.value='';render();
+}
+function viewCmp(){
+  const s=DATA[C.ci];
+  const top='<button class="back" data-act="cback">← 返回 '+esc(s.sys)+'</button><div class="head"><h2>'+(C.view==='table'?'📊 对比表':'🗺️ 总览导图')+'</h2><div class="pills" style="flex:none"><button class="pill" aria-pressed="'+(C.view==='table')+'" data-act="cmpt">📊 表格</button><button class="pill" aria-pressed="'+(C.view==='map')+'" data-act="cmpm">🗺️ 导图</button></div></div>';
+  if(!s.items.length)return top+'<div class="empty">这个分类还没有病证。先添加几个病证再来对比。</div>';
+  const p1=s.items.map((t,i)=>'<button class="pill" aria-pressed="'+C.sel.has(i)+'" data-act="ctopic" data-i="'+i+'">'+esc(t.n||'未命名')+'</button>').join('');
+  const p2=CF.map(f=>'<button class="pill" aria-pressed="'+C.fields.has(f[0])+'" data-act="cfield" data-k="'+f[0]+'">'+f[1]+'</button>').join('')+(C.view==='map'?'<button class="pill" aria-pressed="'+C.deep+'" data-act="cdeep">展开证型详情</button>':'');
+  const bars='<div class="cmpbar"><b>选择病证</b><div class="pills">'+p1+'</div><button data-act="csall">全选</button><button data-act="csnone">清空</button></div><div class="cmpbar"><b>显示内容</b><div class="pills">'+p2+'</div></div>';
+  const idx=[...C.sel].sort((a,b)=>a-b).filter(i=>s.items[i]);
+  const out=!idx.length?'<div class="empty">在上面点选想一起看的病证，例如“心悸”和“胸痹”。</div>':C.view==='map'?mmCmp(idx):tblCmp(idx);
+  return top+bars+out;
+}
+const EMPTYL='<ul><li><br></li></ul>';
+const OKT=new Set(['DIV','P','BR','B','STRONG','I','EM','U','UL','OL','LI','SPAN','MARK']);
+function cleanHtml(h){
+  const doc=new DOMParser().parseFromString('<body>'+h,'text/html');
+  const out=document.createElement('div');
+  (function walk(src,dst){
+    src.childNodes.forEach(n=>{
+      if(n.nodeType===3){dst.appendChild(document.createTextNode(n.nodeValue));return;}
+      if(n.nodeType!==1||n.tagName==='SCRIPT'||n.tagName==='STYLE')return;
+      if(!OKT.has(n.tagName)){walk(n,dst);return;}
+      const e=document.createElement(n.tagName.toLowerCase()),st=n.getAttribute('style')||'';
+      let s='';
+      const ta=/text-align:\s*(left|center|right)/i.exec(st);if(ta)s+='text-align:'+ta[1].toLowerCase()+';';
+      const bc=/background-color:\s*(#[0-9a-f]{3,8}|rgb\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*\))/i.exec(st);if(bc)s+='background-color:'+bc[1]+';';
+      if(s)e.setAttribute('style',s);
+      walk(n,e);dst.appendChild(e);
+    });
+  })(doc.body,out);
+  return out.innerHTML;
+}
+function plainText(s){
+  s=String(s==null?'':s);
+  if(!/<\/?(div|br|b|strong|p|span|ul|ol|li|i|em|u|mark)\b/i.test(s))return s;
+  const h=s.replace(/<br\s*\/?>/gi,'\n').replace(/<\/(div|p|li|h\d)>/gi,'\n');
+  return new DOMParser().parseFromString('<body>'+h,'text/html').body.textContent.replace(/\u00a0/g,' ');
+}
+function rtHtml(s){
+  s=String(s==null?'':s);
+  if(!hv(s))return EMPTYL;
+  if(/<\/?(div|br|b|strong|p|span|ul|ol|li|i|em|u|mark)\b/i.test(s))return cleanHtml(s);
+  return '<ul>'+s.split('\n').map(x=>x.replace(/^\s*•\s*/,'')).filter(x=>x.trim()).map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>';
+}
+function rtDiv(attr,label,val){return '<div class="rt" contenteditable="true" role="textbox" aria-multiline="true" aria-label="'+esc(label)+'" '+attr+'>'+rtHtml(val)+'</div>';}
+const fv=el=>el.classList&&el.classList.contains('rt')?cleanHtml(el.innerHTML):el.value;
+function fmtCmd(c){
+  const ae=document.activeElement;
+  if(!ae||!ae.classList||!ae.classList.contains('rt'))return;
+  if(c==='hiliteColor'){const on=/255,\s*233,\s*138/.test(document.queryCommandValue('hiliteColor')||'');document.execCommand('hiliteColor',false,on?'transparent':'#FFE98A');}
+  else document.execCommand(c,false,null);
+  ae.dispatchEvent(new Event('input',{bubbles:true}));
+}
+const FMT='<div class="fmtbar" role="toolbar" aria-label="文字格式"><button data-fmt="bold" title="加粗 (Ctrl+B)"><b>B</b></button><button data-fmt="italic" title="斜体 (Ctrl+I)"><i>I</i></button><button data-fmt="underline" title="下划线 (Ctrl+U)"><u>U</u></button><button data-fmt="justifyLeft" title="靠左">靠左</button><button data-fmt="justifyCenter" title="居中">居中</button><button data-fmt="insertUnorderedList" title="项目符号">• 列表</button><button data-fmt="hiliteColor" title="高亮">🖍 高亮</button><span class="fmthint">先点进格子，选中文字再点</span></div>';
+function flatT(t){return [t.n,t.etio,t.diag,t.diff,t.bzyd,t.pri].map(x=>plainText(x)).join(' ')+' '+t.zx.map(z=>[z.n,z.sym,z.tx,z.fm,z.comp].concat(zhGet(z).map(r=>(r.s||'')+' '+r.a)).map(x=>plainText(x)).join(' ')).join(' ');}
+function chip(ci,ti,showCat){
+  const t=DATA[ci].items[ti];
+  return '<button class="chip" data-open="'+ci+'-'+ti+'"><b>'+esc(t.n||'未命名')+'</b><small>'+(showCat?esc(DATA[ci].sys)+' · ':'')+'已填 '+filled(t)+'/6</small></button>';
+}
+function viewCat(){
+  const s=DATA[cur];
+  return '<div class="head"><h2>'+(s.em||'')+' '+esc(s.sys)+'</h2><div><button data-act="cmpt">📊 对比表</button> <button data-act="cmpm">🗺️ 导图</button></div></div>'+
+    '<div class="adder"><input id="newT" placeholder="输入病证名称，例如：感冒" aria-label="新病证名称"><button class="primary" data-act="add">＋ 添加</button></div>'+
+    (s.items.length?'<div class="grid">'+s.items.map((t,i)=>chip(cur,i,false)).join('')+'</div>':'<div class="empty">这里还是空的。在上面输入病证名称，点“添加”就有一格了。</div>');
+}
+function viewSearch(kw){
+  let h='',n=0;
+  DATA.forEach((s,ci)=>s.items.forEach((t,ti)=>{if(flatT(t).toLowerCase().includes(kw)){h+=chip(ci,ti,true);n++;}}));
+  return '<div class="head"><h2>🔎 搜索结果</h2></div>'+(n?'<div class="grid">'+h+'</div>':'<div class="empty">没有找到，换个关键词试试。</div>');
+}
+const hv=s=>!!(s&&String(s).replace(/<[^>]*>/g,'').replace(/&nbsp;/g,' ').replace(/[•\s]/g,''));
+const SUBS=[['sym','症状','🤒','l-sym'],['zh','证候分析','🔬','l-zh'],['tx','治法','🧭','l-tx'],['fm','方药','🍵','l-fm']];
+function subHtml(z,i,s){
+  const k=s[0],l=s[1],e=s[2],c=s[3],key=i+'-'+k,op=zsub.has(key);
+  const has=k==='fm'?(hv(z.fm)||hv(z.comp)):k==='zh'?zhHas(z):hv(z[k]);
+  const body=k==='fm'
+    ?'<span class="mini">方名</span>'+rtDiv('data-k="fm"','方名',z.fm)+'<span class="mini">组成</span>'+rtDiv('data-k="comp"','组成',z.comp)+''
+    :k==='zh'?zhBody(z):rtDiv('data-k="'+k+'"',l,z[k]);
+  return '<div class="sub '+c+(op?' open':'')+(has?' has':'')+'" data-sk="'+key+'"><button class="subh" data-act="togsub" aria-expanded="'+op+'"><span class="tag">'+e+' '+l+'</span></button><div class="subbody">'+body+'</div></div>';
+}
+function zxPanel(t){
+  const rows=t.zx.map((z,i)=>{const op=zopen.has(i);
+    return '<div class="zx'+(op?' open':'')+'" data-z="'+i+'"><div class="zxhead"><button class="tog" data-act="togz" aria-label="展开或收起" aria-expanded="'+op+'"></button><input data-k="n" placeholder="证型名称，例如：风寒束表" value="'+esc(z.n)+'" aria-label="证型名称"><button class="danger" data-act="delz">删除</button></div><div class="zbody">'+SUBS.map(s=>subHtml(z,i,s)).join('')+'</div></div>';}).join('');
+  return (rows||'<div class="empty">还没有证型。点下面的按钮添加一个。</div>')+'<button class="primary" data-act="addz" style="margin-top:6px">＋ 添加证型</button>';
+}
+const lines=s=>plainText(s).split('\n').map(x=>x.replace(/^\s*•\s*/,'').trim()).filter(Boolean);
+function mmNode(txt,kids,cls){return '<li'+(cls?' class="'+cls+'"':'')+'><span class="node">'+esc(txt)+'</span>'+(kids&&kids.length?'<ul>'+kids.join('')+'</ul>':'')+'</li>';}
+function mmMap(t){
+  const L=a=>lines(a).map(x=>mmNode(x));
+  const br=[];
+  [['etio','病因病机'],['diag','诊断'],['diff','鉴别诊断'],['bzyd','辨证要点'],['pri','治则治法']].forEach(p=>{const kids=L(t[p[0]]);if(kids.length)br.push(mmNode(p[1],kids,'l1 b-'+p[0]));});
+  const zs=t.zx.map(z=>{
+    const parts=[];
+    [['sym','症状']].forEach(p=>{const kids=L(z[p[0]]);if(kids.length)parts.push(mmNode(p[1],kids));});
+    const zk=zhGet(z).filter(r=>hv(r.s)||hv(r.a)).map(r=>mmNode(r.s&&r.s.trim()?r.s.trim():'（症状）',L(r.a)));
+    if(zk.length)parts.push(mmNode('证候分析',zk));
+    [['tx','治法']].forEach(p=>{const kids=L(z[p[0]]);if(kids.length)parts.push(mmNode(p[1],kids));});
+    const herbs=plainText(z.comp).split(/[、，,；;\n•]+/).map(x=>x.trim()).filter(Boolean).map(x=>mmNode(x));
+    const fm=lines(z.fm).join('、');
+    if(fm||herbs.length)parts.push(mmNode(fm?'方药：'+fm:'方药',herbs));
+    return (parts.length||(z.n&&z.n.trim()))?mmNode(z.n&&z.n.trim()?z.n:'未命名证型',parts):'';
+  }).filter(Boolean);
+  if(zs.length)br.push(mmNode('常见证型',zs,'l1 b-zx'));
+  if(!br.length)return '<div class="empty">还没有内容。先在各个分栏里填写，这里会自动生成思维导图。</div>';
+  return '<div class="mmwrap"><div class="mm"><ul>'+mmNode(t.n||'病证',br,'root')+'</ul></div></div>';
+}
+function panel(t,tab){
+  if(tab==='zx')return zxPanel(t);
+  if(tab==='zxt')return zxTable(t);
+  if(tab==='map')return mmMap(t);
+  return panelOld(t,tab);
+}
+function panelOld(t,tab){
+  if(tab==='zx'){
+    const rows=t.zx.map((z,i)=>'<div class="zx" data-z="'+i+'"><div class="zxhead"><input data-k="n" placeholder="证型名称，例如：风寒束表" value="'+esc(z.n)+'" aria-label="证型名称"><button class="danger" data-act="delz">删除</button></div><div class="zgrid">'+
+      '<div class="l-sym"><span class="tag">🤒 症状</span><div class="fld"><textarea data-k="sym" aria-label="症状">'+esc(z.sym)+'</textarea></div></div>'+
+      '<div class="l-tx"><span class="tag">🧭 治法</span><div class="fld"><textarea data-k="tx" aria-label="治法">'+esc(z.tx)+'</textarea></div></div>'+
+      '<div class="l-fm"><span class="tag">🍵 方药</span><div class="fld"><textarea data-k="fm" aria-label="方药">'+esc(z.fm)+'</textarea></div></div>'+
+      '<div class="l-comp"><span class="tag">🌿 组成</span><div class="fld"><textarea data-k="comp" aria-label="组成">'+esc(z.comp)+'</textarea></div></div></div></div>').join('');
+    return (rows||'<div class="empty">还没有证型。点下面的按钮添加一个。</div>')+'<button class="primary" data-act="addz" style="margin-top:6px">＋ 添加证型</button>';
+  }
+  return '<div class="fld f-'+tab+'">'+rtDiv('data-f="'+tab+'"',TABS.find(x=>x[0]===tab)[1],t[tab])+'</div>';
+}
+function viewTopic(){
+  const s=DATA[open.ci],t=s.items[open.ti];
+  const tabs=TABS.map(([k,l,e])=>{
+    const has=k==='zx'?t.zx.length:hv(t[k]);
+    return '<button role="tab" class="tb-'+k+'" data-tab="'+k+'" aria-selected="'+(open.tab===k)+'">'+e+' '+l+(has?'<i>✓</i>':'')+'</button>';
+  }).join('');
+  return '<button class="back" data-act="back">← 返回 '+esc(s.sys)+'</button>'+
+    '<div class="thead"><input id="tname" value="'+esc(t.n)+'" aria-label="病证名称"><button class="danger" data-act="deltopic">'+(delArm?'再点确认删除':'删除病证')+'</button></div>'+
+    '<div class="tabs" role="tablist">'+tabs+'<button class="rbtn" data-act="recite" aria-pressed="'+recite+'">'+(recite?'👀 退出背诵':'🧠 背诵模式')+'</button></div>'+(open.tab==='map'||open.tab==='zxt'?'':FMT)+'<div class="panel'+(recite?' recite':'')+'">'+panel(t,open.tab)+'<div class="saved" id="saved"></div></div>';
+}
+function render(){
+  document.body.classList.toggle("viewer",!cloudOwner);
+  $("adminLogin").textContent=cloudOwner?"管理员已登录 · 退出":"管理员登录";
+  renderNav();
+  const kw=q.value.trim().toLowerCase();
+  addWheelBtn();main.innerHTML=kw?viewSearch(kw):mode==='wheel'?viewWheel():mode==='cmp'?viewCmp():open?viewTopic():viewCat();fitAll();
+}
+
+main.addEventListener('click',e=>{
+  const fb=e.target.closest('[data-fmt]');if(fb){fmtCmd(fb.dataset.fmt);return;}
+  const fl=e.target.closest('.recite>.fld:not(.shown)');if(fl){fl.classList.add('shown');return;}
+  const c=e.target.closest('.chip');
+  if(c){const [ci,ti]=c.dataset.open.split('-').map(Number);open={ci,ti,tab:'etio'};cur=ci;q.value='';delArm=false;recite=false;zopen.clear();zsub.clear();mode=null;render();return;}
+  const tb=e.target.closest('[data-tab]');
+  if(tb){open.tab=tb.dataset.tab;render();return;}
+  const b=e.target.closest('[data-act]');if(!b)return;
+  const a=b.dataset.act;
+  if(!cloudOwner && ['add','addzh','delzh','addz','delz','deltopic'].includes(a))return;
+  if(a==='add'){
+    const inp=$('newT'),n=inp.value.trim();
+    if(!n){inp.focus();return;}
+    DATA[cur].items.push({n,etio:'',diag:'',diff:'',bzyd:'',pri:'',zx:[]});persist();render();return;
+  }
+  if(a==='cmpt'||a==='cmpm'){openCmp(a==='cmpt'?'table':'map');return;}
+  if(a==='cback'){mode=null;render();return;}
+  if(a==='ctopic'){const i=+b.dataset.i;if(C.sel.has(i))C.sel.delete(i);else C.sel.add(i);render();return;}
+  if(a==='cfield'){const k=b.dataset.k;if(C.fields.has(k))C.fields.delete(k);else C.fields.add(k);render();return;}
+  if(a==='cdeep'){C.deep=!C.deep;render();return;}
+  if(a==='csall'){C.sel=new Set(DATA[C.ci].items.map((_,i)=>i));render();return;}
+  if(a==='csnone'){C.sel=new Set();render();return;}
+  if(a==='spin'){
+    if(W.spinning)return;
+    const seg=W.seg.length===1?[W.seg[0],W.seg[0]]:W.seg;
+    const n=seg.length,ang=360/n,idx=Math.floor(Math.random()*n),center=(idx+.5)*ang+(Math.random()-.5)*ang*.5;
+    W.rot+=360*5+((((360-center)-(W.rot%360))%360)+360)%360;
+    const svg=$('wheel'),ms=matchMedia('(prefers-reduced-motion:reduce)').matches?300:4200;
+    W.spinning=true;$('spinBtn').disabled=true;
+    svg.style.transition='transform '+ms+'ms cubic-bezier(.12,.7,.15,1)';
+    svg.style.transform='rotate('+W.rot+'deg)';
+    setTimeout(()=>{W.spinning=false;if(mode!=='wheel')return;W.pick=seg[idx];W.ans={};W.stage='quiz';render();},ms+300);
+    return;
+  }
+  if(a==='reshuffle'){W.seg=null;render();return;}
+  if(a==='qwheel'){W.stage='wheel';render();return;}
+  if(a==='grade'){gradeNow();render();return;}
+  if(a==='again'){W.stage='wheel';render();return;}
+  if(a==='retry'){W.ans={};W.stage='quiz';render();return;}
+  if(a==='opennote'){mode=null;open={ci:W.pick.ci,ti:W.pick.ti,tab:'etio'};cur=W.pick.ci;zopen.clear();zsub.clear();render();return;}
+  if(a==='togz'){const z=b.closest('.zx'),i=+z.dataset.z;z.classList.toggle('open');const o=z.classList.contains('open');if(o)zopen.add(i);else zopen.delete(i);b.setAttribute('aria-expanded',o);fitAll();return;}
+  if(a==='togsub'){const s=b.closest('.sub'),k=s.dataset.sk;s.classList.toggle('open');const o=s.classList.contains('open');if(o)zsub.add(k);else zsub.delete(k);b.setAttribute('aria-expanded',o);fitAll();return;}
+  if(a==='recite'){recite=!recite;render();return;}
+  if(a==='back'){open=null;delArm=false;recite=false;render();return;}
+  const t=open&&DATA[open.ci].items[open.ti];
+  if(a==='addzh'){const z=t.zx[+b.closest('.zx').dataset.z];zhGet(z).push({s:'',a:''});persist();render();return;}
+  if(a==='delzh'){const z=t.zx[+b.closest('.zx').dataset.z];zhGet(z).splice(+b.closest('.zhrow').dataset.zi,1);persist();render();return;}
+  if(a==='addz'){t.zx.push({n:'',sym:'',zha:[{s:'',a:''}],tx:'',fm:'',comp:''});zopen.add(t.zx.length-1);persist();render();return;}
+  if(a==='delz'){t.zx.splice(+b.closest('.zx').dataset.z,1);zopen.clear();zsub.clear();persist();render();return;}
+  if(a==='deltopic'){
+    if(delArm){DATA[open.ci].items.splice(open.ti,1);open=null;delArm=false;persist();render();}
+    else{delArm=true;b.textContent='再点确认删除';}
+  }
+});
+main.addEventListener('input',e=>{
+  if(!cloudOwner && e.target.dataset.q===undefined)return;
+  if(e.target.tagName==='TEXTAREA')autoSize(e.target);
+  if(e.target.dataset.q!==undefined){W.ans[e.target.dataset.q]=e.target.value;return;}
+  if(!open)return;
+  const el=e.target,t=DATA[open.ci].items[open.ti];
+  if(el.id==='tname')t.n=el.value;
+  else if(el.dataset.f)t[el.dataset.f]=fv(el);
+  else if(el.dataset.zk){const zz=t.zx[+el.closest('.zx').dataset.z];zhGet(zz)[+el.closest('.zhrow').dataset.zi][el.dataset.zk]=fv(el);const sb2=el.closest('.sub');if(sb2)sb2.classList.toggle('has',zhHas(zz));}
+  else if(el.dataset.k){t.zx[+el.closest('.zx').dataset.z][el.dataset.k]=fv(el);const sb=el.closest('.sub');if(sb)sb.classList.toggle('has',[...sb.querySelectorAll('.rt')].some(x=>hv(x.innerHTML)));}
+  else return;
+  scheduleSave();
+});
+main.addEventListener('keydown',e=>{
+  if(e.isComposing||e.keyCode===229)return;
+  const el=e.target;
+  if(e.key==='Enter'&&el.id==='newT'){e.preventDefault();main.querySelector('[data-act="add"]').click();return;}
+  if(e.key==='Enter'&&el.tagName==='TEXTAREA'){
+    e.preventDefault();
+    const v=el.value,s=el.selectionStart,ls=v.lastIndexOf('\n',s-1)+1;
+    if(v.slice(ls,s).trim()==='•')el.setRangeText('',ls,s,'end');
+    else el.setRangeText('\n• ',s,el.selectionEnd,'end');
+    el.dispatchEvent(new Event('input',{bubbles:true}));
+  }
+});
+main.addEventListener('focusin',e=>{
+  const el=e.target;
+  if(el.tagName==='TEXTAREA'&&!el.value.trim()){el.value='• ';el.setSelectionRange(2,2);}
+});
+main.addEventListener('focusout',e=>{
+  const el=e.target;
+  if(el.tagName==='TEXTAREA'&&el.value.trim()==='•')el.value='';
+});
+q.addEventListener('input',()=>{if(q.value)open=null;render();});
+main.addEventListener('change',e=>{if(e.target.id==='wcat'){W.cat=e.target.value;W.seg=null;render();}});
+window.addEventListener('resize',fitAll);
+main.addEventListener('mousedown',e=>{if(e.target.closest('[data-fmt]'))e.preventDefault();});
+main.addEventListener('paste',e=>{if(e.target.closest&&e.target.closest('.rt')){e.preventDefault();const tx=(e.clipboardData||window.clipboardData).getData('text/plain');document.execCommand('insertText',false,tx);}});
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitAll);
+
+$('backup').onclick=()=>{$('bkText').value=JSON.stringify(DATA);$('bkMsg').textContent='';$('bk').showModal();};
+$('bkClose').onclick=()=>$('bk').close();
+$('bkImport').onclick=()=>{
+  if(!cloudOwner){$('bkMsg').textContent='只有管理员登录后才能导入并更新公开笔记。';return;}
+  try{
+    const d=JSON.parse($('bkText').value);
+    if(!Array.isArray(d)||!d.every(s=>s&&typeof s.sys==='string'&&Array.isArray(s.items)))throw 0;
+    d.forEach(s=>s.items.forEach(t=>{t.zx=Array.isArray(t.zx)?t.zx:[];}));
+    DATA=d;cur=0;open=null;persist();render();$('bk').close();
+  }catch(e){$('bkMsg').textContent='导入失败，请粘贴完整的备份文字。';}
+};
+$('theme').onclick=()=>{
+  const r=document.documentElement;
+  const dark=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+  r.dataset.theme=dark?'light':'dark';
+};
+function setCloudStatus(s){const el=$("cloudStatus");if(el)el.textContent=s;}
+$('adminLogin').onclick=async()=>{
+  try{
+    if(auth.currentUser){await signOut(auth);return;}
+    const provider=new GoogleAuthProvider();
+    await signInWithPopup(auth,provider);
+  }catch(e){console.error(e);setCloudStatus('登录失败：'+(e.code||e.message));alert('管理员登录失败：'+(e.code||e.message)+'。请确认 Firebase Authentication 已启用 Google 登录，并已添加 GitHub Pages 域名。');}
+};
+onAuthStateChanged(auth,async user=>{
+  currentUser=user;cloudOwner=!!user && user.email === "calistalim004@gmail.com";cloudReady=false;
+  if(cloudUnsubscribe){cloudUnsubscribe();cloudUnsubscribe=null;}
+  render();
+  setCloudStatus(user?'管理员已登录，正在读取云端笔记……':'公开查看模式：正在读取最新笔记……');
+  try{
+    cloudUnsubscribe=onSnapshot(noteRef,async snap=>{
+      if(snap.exists()){
+        const remote=snap.data().data;
+        if(Array.isArray(remote)&&remote.length){
+          const changed=JSON.stringify(DATA)!==JSON.stringify(remote);
+          if(changed){DATA=remote;cur=Math.min(cur,DATA.length-1);if(open&&!DATA[open.ci]?.items?.[open.ti])open=null;try{localStorage.setItem(KEY,JSON.stringify(DATA));}catch(e){}render();}
+        }
+        cloudReady=true;
+        setCloudStatus(cloudOwner?'☁️ 管理员模式：云端实时同步已连接':'☁️ 公开查看：已加载最新笔记');
+      }else if(cloudOwner){
+        // First owner visit: migrate existing browser notes into the shared cloud document.
+        await setDoc(noteRef,{data:DATA,updatedAt:serverTimestamp()});
+        cloudReady=true;setCloudStatus('☁️ 已将本机笔记上传到云端');
+      }else{
+        cloudReady=true;setCloudStatus('等待管理员首次上传笔记……');
+      }
+    },err=>{console.error(err);setCloudStatus('读取云端失败：请检查 Firestore Rules');});
+  }catch(e){console.error(e);setCloudStatus('连接云端失败：'+(e.code||e.message));}
+});
+render();
+</script>
+</body>
+</html>
